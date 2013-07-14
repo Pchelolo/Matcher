@@ -2,7 +2,6 @@ package pchelolo.matcher.nfa;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 

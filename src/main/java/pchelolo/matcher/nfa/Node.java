@@ -1,13 +1,11 @@
 package pchelolo.matcher.nfa;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Node implements UnmodifiableNode {
 
     private final Character c;
-    private final Set<Node> out = new HashSet<>();
+    private final List<Node> out = new ArrayList<>(1);
 
     public Node(Character c) {
         this.c = c;
@@ -25,8 +23,8 @@ public class Node implements UnmodifiableNode {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Set<UnmodifiableNode> getOut() {
-        return (Set)Collections.unmodifiableSet(out);
+    public List<UnmodifiableNode> getOut() {
+        return (List)Collections.unmodifiableList(out);
     }
 
     @Override

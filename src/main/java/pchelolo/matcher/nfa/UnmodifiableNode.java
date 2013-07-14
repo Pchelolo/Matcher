@@ -1,9 +1,9 @@
 package pchelolo.matcher.nfa;
 
-import java.util.Set;
+import java.util.List;
 
 public interface UnmodifiableNode {
     public static final Node FINAL = new Node(' ');
     public Character getC();
-    public Set<UnmodifiableNode> getOut();
+    public List<UnmodifiableNode> getOut();
 }

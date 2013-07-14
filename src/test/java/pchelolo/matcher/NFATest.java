@@ -1,7 +1,6 @@
 package pchelolo.matcher;
 
 
-import static org.junit.Assert.*;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Test;
 import pchelolo.matcher.nfa.NFAConstructionVisitor;
@@ -9,7 +8,9 @@ import pchelolo.matcher.nfa.NFAFragment;
 import pchelolo.matcher.nfa.Node;
 import pchelolo.matcher.nfa.UnmodifiableNode;
 
-import java.util.Set;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 public class NFATest {
 
@@ -25,19 +26,19 @@ public class NFATest {
         assertNotNull(nfa);
         Node firstState = nfa.getStart();
         assertNull(firstState.getC());
-        Set<UnmodifiableNode> firstOuts = firstState.getOut();
+        List<UnmodifiableNode> firstOuts = firstState.getOut();
         assertNotNull(firstOuts);
         assertEquals(2, firstOuts.size());
         boolean visitedA = false;
         boolean visitedB = false;
         for (UnmodifiableNode node : firstOuts) {
             if (node.getC() == 'a') {
-                Set<UnmodifiableNode> aOuts = node.getOut();
+                List<UnmodifiableNode> aOuts = node.getOut();
                 assertEquals(1, aOuts.size());
                 assertTrue(aOuts.contains(UnmodifiableNode.FINAL));
                 visitedA = true;
             } else if (node.getC() == 'b') {
-                Set<UnmodifiableNode> bOuts = node.getOut();
+                List<UnmodifiableNode> bOuts = node.getOut();
                 assertEquals(1, bOuts.size());
                 UnmodifiableNode cState = bOuts.iterator().next();
                 assertTrue(cState.getC() == 'c');
