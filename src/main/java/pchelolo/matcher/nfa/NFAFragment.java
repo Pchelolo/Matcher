@@ -1,18 +1,20 @@
 package pchelolo.matcher.nfa;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class NFAFragment {
     private Node start;
-    private Set<Node> outStates;
+    private List<Node> outStates;
 
     NFAFragment(Node start) {
         this.start = start;
-        outStates = new HashSet<>();
+        outStates = new ArrayList<>();
     }
 
-    public Set<Node> getOutStates() {
+    public List<Node> getOutStates() {
         return outStates;
     }
 
@@ -24,12 +26,12 @@ public class NFAFragment {
         this.start = newStart;
     }
 
-    public void setOutStates(Set<Node> newOutStates) {
+    public void setOutStates(List<Node> newOutStates) {
         this.outStates = newOutStates;
     }
 
     public void setOutState(Node newOutState) {
-        this.outStates = new HashSet<>();
+        this.outStates = new ArrayList<>();
         this.outStates.add(newOutState);
     }
 }

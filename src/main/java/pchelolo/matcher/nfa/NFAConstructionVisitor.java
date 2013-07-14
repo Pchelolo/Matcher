@@ -115,4 +115,5 @@ public class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
         resultFragment.setOutStates(null);
         return resultFragment;
     }
+
 }
