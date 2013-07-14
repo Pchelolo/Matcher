@@ -50,4 +50,29 @@ public class PatternParserTest {
         assertTrue(result);
     }
 
+    @Test
+    public void testRangeGroup() throws Exception {
+        ParseTree tree = Pattern.parse("[a-z]");
+        assertNotNull(tree);
+        boolean result = new RegexBaseVisitor<Boolean>() {
+            @Override
+            public Boolean visitRangeGroup(@NotNull RegexParser.RangeGroupContext ctx) {
+                return true;
+            }
+        }.visit(tree);
+        assertTrue(result);
+    }
+
+    @Test
+    public void testListGroup() throws Exception {
+        ParseTree tree = Pattern.parse("[abcdez]");
+        assertNotNull(tree);
+        boolean result = new RegexBaseVisitor<Boolean>() {
+            @Override
+            public Boolean visitListGroup(@NotNull RegexParser.ListGroupContext ctx) {
+                return true;
+            }
+        }.visit(tree);
+        assertTrue(result);
+    }
 }

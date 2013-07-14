@@ -1,6 +1,7 @@
 package pchelolo.matcher.nfa;
 
 import org.antlr.v4.runtime.misc.NotNull;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import pchelolo.matcher.RegexBaseVisitor;
 import pchelolo.matcher.RegexParser;
 
@@ -41,7 +42,7 @@ public class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
 
     @Override
     public NFAFragment visitDisjunction(@NotNull RegexParser.DisjunctionContext ctx) {
-        Node newStartNode = new Node(null);
+        Node newStartNode = Node.splitNode();
         NFAFragment resultFragment = new NFAFragment(newStartNode);
         for (RegexParser.ConjunctionContext context : ctx.conjunction()) {
             NFAFragment conjunctionFragment = visit(context);
@@ -53,7 +54,7 @@ public class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
 
     @Override
     public NFAFragment visitClosure(@NotNull RegexParser.ClosureContext ctx) {
-        Node newStartNode = new Node(null);
+        Node newStartNode = Node.splitNode();
         NFAFragment resultFragment = visit(ctx.atom());
         // Loop the out states of a fragment back to new state
         for (Node outState : resultFragment.getOutStates()) {
@@ -63,6 +64,46 @@ public class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
         resultFragment.setStart(newStartNode);
         resultFragment.setOutState(newStartNode);
         return resultFragment;
+    }
+
+    @Override
+    public NFAFragment visitRange(@NotNull RegexParser.RangeContext ctx) {
+        char start = ctx.ID(0).getSymbol().getText().charAt(0);
+        char finish = ctx.ID(1).getSymbol().getText().charAt(0);
+        if (start > finish)
+            throw new IllegalArgumentException(String.format("Illegal range: %c..%c", start, finish));
+        Node startNode = Node.splitNode();
+        NFAFragment result = new NFAFragment(startNode);
+        for (char c = start; c <= finish; c++) {
+            Node charNode = new Node(c);
+            startNode.addOutNode(charNode);
+            result.getOutStates().add(charNode);
+        }
+        return result;
+    }
+
+    @Override
+    public NFAFragment visitListGroup(@NotNull RegexParser.ListGroupContext ctx) {
+        Node startNode = Node.splitNode();
+        NFAFragment result = new NFAFragment(startNode);
+        for (TerminalNode id : ctx.ID()) {
+            Node charNode = new Node(id.getSymbol().getText().charAt(0));
+            startNode.addOutNode(charNode);
+            result.getOutStates().add(charNode);
+        }
+        return result;
+    }
+
+    @Override
+    public NFAFragment visitRangeGroup(@NotNull RegexParser.RangeGroupContext ctx) {
+        Node startNode = Node.splitNode();
+        NFAFragment result = new NFAFragment(startNode);
+        for (RegexParser.RangeContext rangeContext : ctx.range()) {
+            NFAFragment rangeFragment = visit(rangeContext);
+            startNode.addOutNode(rangeFragment.getStart());
+            result.getOutStates().addAll(rangeFragment.getOutStates());
+        }
+        return result;
     }
 
     @Override

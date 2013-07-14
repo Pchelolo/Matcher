@@ -15,6 +15,9 @@ public class Node implements UnmodifiableNode {
         out.add(newNode);
     }
 
+    public static Node splitNode() {
+        return new Node(null);
+    }
 
     @Override
     public Character getC() {

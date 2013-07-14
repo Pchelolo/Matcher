@@ -40,6 +40,15 @@ public class MatcherTest {
     }
 
     @Test
+    public void testMatchesRangeGroup() throws Exception {
+        Matcher m = Pattern.compile("[a-z0-9]*").matcher();
+        assertTrue(m.matches("a"));
+        assertTrue(m.matches("absdfvsdfvsdcadc90129"));
+        assertFalse(m.matches("A"));
+        assertFalse(m.matches("asdasdcasdcasdcasdcA"));
+    }
+
+    @Test
     public void testClosureWithDisjunction() throws Exception {
         String pattern = "(a|b)*";
         Matcher m = Pattern.compile(pattern).matcher();
@@ -61,17 +70,17 @@ public class MatcherTest {
 
     @Test
     public void testMatchesComplex1() throws Exception {
-        String pattern = "a*|(a*ba*ba*)*";
+        String pattern = "a*|(a*ba*ba*)*[a-zA-Z]*";
         Matcher m = Pattern.compile(pattern).matcher();
         java.util.regex.Pattern javaPattern = java.util.regex.Pattern.compile(pattern);
         String[] testSequences = {
                 "a",
-                "aaa",
-                "bbaabb",
-                "babaa",
-                "aba",
-                "bbb",
-                "babbaaa"
+                "aaaasdcaksjdcnajksdcaASDCAasdcaDCa",
+                "bbaabbasdcASca",
+                "babaaasdASDCa0",
+                "ab0a",
+                "bbbASDc0",
+                "babbaaaasdc)A"
         };
         for (String test : testSequences) {
             assertTrue("AssertionError for string: " + test, m.matches(test) == javaPattern.matcher(test).matches());
