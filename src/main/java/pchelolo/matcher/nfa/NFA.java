@@ -1,13 +1,19 @@
 package pchelolo.matcher.nfa;
 
-interface NFA {
+import java.util.Set;
 
-    State getInitialState;
+public interface NFA {
+
+    Set<State> getInitialStates();
+    Set<State> getNextStates(Set<State> states, char nextChar);
+    boolean containsFinalState(Set<State> states);
+
 
     public static interface State {
         Character getC();
         State getFirstOut();
         State getSecondOut();
+        boolean isFinal();
     }
 
     static class StateImpl implements State {
@@ -15,7 +21,7 @@ interface NFA {
         State firstOut;
         State secondOut;
 
-        public StateImpl(char c) {
+        public StateImpl(Character c) {
             this.c = c;
         }
 
@@ -40,6 +46,16 @@ interface NFA {
             return secondOut;
         }
 
+        @Override
+        public boolean isFinal() {
+            return c != null && c == ' ';
+        }
+
+        @Override
+        public String toString() {
+            return String.format("State: c=%c final=%b", c, isFinal());
+        }
+
         public void setC(Character c) {
             this.c = c;
         }
@@ -50,6 +66,10 @@ interface NFA {
 
         public void setSecondOut(State secondOut) {
             this.secondOut = secondOut;
+        }
+
+        public static StateImpl createFinalState() {
+            return new StateImpl(' ', null, null);
         }
     }
 }

@@ -1,9 +1,7 @@
 package pchelolo.matcher.nfa;
 
-import pchelolo.matcher.NFAFragment;
 import pchelolo.matcher.RegexBaseVisitor;
 import pchelolo.matcher.RegexParser;
-import pchelolo.matcher.nfa.NFA;
 
 public class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
 
@@ -32,4 +30,16 @@ public class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
         NFAFragment second = visit(ctx.pattern(1));
         return NFAFragment.disjunction(first, second);
     }
+
+    @Override
+    public NFAFragment visitClosure(RegexParser.ClosureContext ctx) {
+        return NFAFragment.closure(visit(ctx.pattern()));
+    }
+
+    @Override
+    public NFAFragment visitRegex(RegexParser.RegexContext ctx) {
+        return NFAFragment.finish(visit(ctx.pattern()));
+    }
+
+
 }

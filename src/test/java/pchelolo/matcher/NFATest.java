@@ -21,7 +21,7 @@ public class NFATest {
          */
         NFAFragment nfa = new NFAConstructionVisitor().visit(tree);
         assertNotNull(nfa);
-        NFA.State firstState = ;
+        NFA.State firstState = nfa.getStart();
         assertNull(firstState.getC());
         assertNotNull(firstState.getFirstOut());
         assertNotNull(firstState.getSecondOut());
