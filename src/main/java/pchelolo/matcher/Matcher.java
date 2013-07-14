@@ -1,25 +1,26 @@
 package pchelolo.matcher;
 
-import pchelolo.matcher.nfa.NFA;
+import pchelolo.matcher.nfa.NFAUtils;
+import pchelolo.matcher.nfa.UnmodifiableNode;
 
 import java.util.Set;
 
 public class Matcher {
 
-    private final NFA nfa;
+    private final UnmodifiableNode nfa;
 
-    Matcher(NFA nfa) {
+    Matcher(UnmodifiableNode nfa) {
         this.nfa = nfa;
     }
 
     public boolean matches(String string) {
         char[] characters = string.toCharArray();
-        Set<NFA.State> currentStates = nfa.getInitialStates();
+        Set<UnmodifiableNode> currentStates = NFAUtils.getInitialSetForState(nfa);
         for (char c : characters) {
             if (currentStates.isEmpty()) return false;
-            currentStates = nfa.getNextStates(currentStates, c);
+            currentStates = NFAUtils.getNextStates(currentStates, c);
         }
-        return nfa.containsFinalState(currentStates);
+        return currentStates.contains(UnmodifiableNode.FINAL);
     }
 
 }

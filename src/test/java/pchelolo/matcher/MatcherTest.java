@@ -18,9 +18,9 @@ public class MatcherTest {
     @Test
     public void testMatchesAorB() throws Exception {
         Matcher m = Pattern.compile("ab|cd").matcher();
-       // assertTrue(m.matches("ab"));
+        assertTrue(m.matches("ab"));
         assertTrue(m.matches("cd"));
-       // assertFalse(m.matches("abc"));
+        assertFalse(m.matches("abc"));
     }
 
     @Test
@@ -40,6 +40,26 @@ public class MatcherTest {
     }
 
     @Test
+    public void testClosureWithDisjunction() throws Exception {
+        String pattern = "(a|b)*";
+        Matcher m = Pattern.compile(pattern).matcher();
+        java.util.regex.Pattern javaPattern = java.util.regex.Pattern.compile(pattern);
+        String[] testSequences = {
+                "aaa",
+                "bbbbbbb",
+                "abbbabababaab",
+                "",
+                "c",
+                "ababbabababababababaaac"
+        };
+        System.out.println(m.matches(testSequences[0]));
+        for (String test : testSequences) {
+            assertTrue("AssertionError for string: " + test, m.matches(test) == javaPattern.matcher(test).matches());
+        }
+
+    }
+
+    @Test
     public void testMatchesComplex1() throws Exception {
         String pattern = "a*|(a*ba*ba*)*";
         Matcher m = Pattern.compile(pattern).matcher();
@@ -52,24 +72,6 @@ public class MatcherTest {
                 "aba",
                 "bbb",
                 "babbaaa"
-        };
-        for (String test : testSequences) {
-            assertTrue("AssertionError for string: " + test, m.matches(test) == javaPattern.matcher(test).matches());
-        }
-    }
-
-    @Test
-    public void testMatchesComplex2() throws Exception {
-        String pattern = "(abc|cab)*";
-        Matcher m = Pattern.compile(pattern).matcher();
-        java.util.regex.Pattern javaPattern = java.util.regex.Pattern.compile(pattern);
-        String[] testSequences = {
-                //"aaa",
-                "abccab"//,
-                //"abccabbbcabccab",
-                //"abccbabcabccab",
-                //"abccababcacccab",
-                //"abccababcabccaba",
         };
         for (String test : testSequences) {
             assertTrue("AssertionError for string: " + test, m.matches(test) == javaPattern.matcher(test).matches());

@@ -1,12 +1,14 @@
 grammar Regex;
 
-regex   : pattern;
+regex       : disjunction;
 
-pattern : '(' pattern ')'      #Braced
-        | pattern '*'          #Closure
-        | pattern  pattern     #And
-        | pattern '|' pattern  #Or
-        | ID                   #Id
-        ;
+disjunction : conjunction ( '|' conjunction )*;
 
-ID      : [a-zA-Z0-9];
+conjunction : atom ( atom )*;
+
+atom        : '(' disjunction ')'       #Braced
+            | atom '*'                  #Closure
+            | ID                        #Id
+            ;
+
+ID          : [a-zA-Z0-9];
