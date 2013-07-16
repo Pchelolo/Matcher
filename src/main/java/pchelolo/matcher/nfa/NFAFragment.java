@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class NFAFragment implements UnmodifiableNFA{
-    private List<Node> nodes;
+class NFAFragment implements UnmodifiableNFA{
+    private final List<Node> nodes;
     private List<Node> outNodes;
 
     NFAFragment(Node start) {

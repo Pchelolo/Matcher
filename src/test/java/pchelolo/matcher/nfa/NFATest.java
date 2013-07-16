@@ -33,14 +33,12 @@ public class NFATest {
             UnmodifiableNode node = nfa.getNodes().get(firstState.getOut(idx));
             if (node.getC() == 'a') {
                 assertEquals(1, node.getOutCount());
-                assertTrue(nfa.getNodes().get(node.getOut(0)).isFinal());
                 visitedA = true;
             } else if (node.getC() == 'b') {
                 assertEquals(1, node.getOutCount());
                 UnmodifiableNode cState = nfa.getNodes().get(node.getOut(0));
                 assertTrue(cState.getC() == 'c');
                 assertEquals(1, cState.getOutCount());
-                assertTrue(nfa.getNodes().get(cState.getOut(0)).isFinal());
                 visitedB = true;
             } else {
                 assertTrue("Unexpected state " + node, false);

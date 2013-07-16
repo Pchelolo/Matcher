@@ -6,7 +6,7 @@ import pchelolo.matcher.RegexParser;
 
 import java.util.List;
 
-public class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
+class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
 
     @Override
     public NFAFragment visitId(@NotNull RegexParser.IdContext ctx) {

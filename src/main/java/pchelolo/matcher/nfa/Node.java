@@ -17,11 +17,11 @@ abstract class Node implements UnmodifiableNode {
         }
     }
 
-    void setOutNode(Node newNode) {
+    void setOutNode(UnmodifiableNode newNode) {
         setOutNode(newNode, 0);
     }
 
-    void setOutNode(Node newNode, int index) {
+    void setOutNode(UnmodifiableNode newNode, int index) {
         setOutNode(newNode.getNumber(), index);
     }
 
@@ -49,18 +49,13 @@ abstract class Node implements UnmodifiableNode {
     }
 
     @Override
-    public boolean isFinal() {
-        return false;
-    }
-
-    @Override
     public boolean isEpsilon() {
         return true;
     }
 
     private static class CommonNode extends Node {
         private final char c;
-        private int out;
+        private int out = 0;
 
         private CommonNode(char c) {
             this.c = c;
@@ -146,11 +141,6 @@ abstract class Node implements UnmodifiableNode {
         @Override
         public int getOut(int index) {
             throw new IllegalStateException("Could not get out nodes of a final node");
-        }
-
-        @Override
-        public boolean isFinal() {
-            return true;
         }
     }
 

@@ -4,11 +4,10 @@ package pchelolo.matcher;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import pchelolo.matcher.nfa.NFAFragment;
 import pchelolo.matcher.nfa.NFAUtils;
 import pchelolo.matcher.nfa.UnmodifiableNFA;
 
-public class Pattern {
+public final class Pattern {
 
     private final UnmodifiableNFA nfa;
     // Memory visibility assurance

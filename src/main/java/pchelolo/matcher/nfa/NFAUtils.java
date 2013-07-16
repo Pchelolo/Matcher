@@ -12,7 +12,7 @@ public class NFAUtils {
         //Avoid instantiation
     }
 
-    public static NFAFragment createNFA(ParseTree tree) {
+    public static UnmodifiableNFA createNFA(ParseTree tree) {
         return new NFAConstructionVisitor().visit(tree);
     }
 

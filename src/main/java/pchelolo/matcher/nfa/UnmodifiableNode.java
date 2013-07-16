@@ -5,6 +5,5 @@ public interface UnmodifiableNode {
     int getOutCount();
     int getOut(int index);
     int getNumber();
-    boolean isFinal();
     boolean isEpsilon();
 }

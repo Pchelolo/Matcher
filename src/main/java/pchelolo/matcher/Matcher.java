@@ -1,13 +1,9 @@
 package pchelolo.matcher;
 
-import pchelolo.matcher.nfa.NFAFragment;
 import pchelolo.matcher.nfa.NFAUtils;
 import pchelolo.matcher.nfa.UnmodifiableNFA;
-import pchelolo.matcher.nfa.UnmodifiableNode;
 
-import java.util.Set;
-
-public class Matcher {
+public final class Matcher {
 
     private final UnmodifiableNFA nfa;
 
