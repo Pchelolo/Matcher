@@ -53,6 +53,11 @@ abstract class Node implements UnmodifiableNode {
         return false;
     }
 
+    @Override
+    public boolean isEpsilon() {
+        return true;
+    }
+
     private static class CommonNode extends Node {
         private final char c;
         private int out;
@@ -62,7 +67,7 @@ abstract class Node implements UnmodifiableNode {
         }
 
         @Override
-        public Character getC() {
+        public char getC() {
             return c;
         }
 
@@ -75,6 +80,11 @@ abstract class Node implements UnmodifiableNode {
         public int getOut(int index) {
             assert index == 0;
             return out;
+        }
+
+        @Override
+        public boolean isEpsilon() {
+            return false;
         }
 
         @Override
@@ -92,8 +102,8 @@ abstract class Node implements UnmodifiableNode {
         }
 
         @Override
-        public Character getC() {
-            return null;
+        public char getC() {
+            return 0;
         }
 
         @Override
@@ -124,8 +134,8 @@ abstract class Node implements UnmodifiableNode {
         }
 
         @Override
-        public Character getC() {
-            return null;
+        public char getC() {
+            return 0;
         }
 
         @Override

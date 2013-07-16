@@ -27,7 +27,7 @@ public class NFAUtils {
         for (int i = 0; i < state.length; i++) {
             if (state[i]) {
                 UnmodifiableNode node = nfa.getNodeAtIndex(i);
-                if (node.getC() != null && node.getC() == nextChar) {
+                if (node.getC() == nextChar) {
                     for (int outIdx = 0; outIdx < node.getOutCount(); outIdx++) {
                         addEReachableStates(nfa, nfa.getNodeAtIndex(node.getOut(outIdx)), newState);
                     }
@@ -40,7 +40,7 @@ public class NFAUtils {
     private static void addEReachableStates(UnmodifiableNFA nfa, UnmodifiableNode node, boolean[] state) {
         if (!state[node.getNumber()]) {
             state[node.getNumber()] = true;
-            if (node.getC() == null) {
+            if (node.isEpsilon()) {
                 for (int i = 0; i < node.getOutCount(); i++) {
                     addEReachableStates(nfa, nfa.getNodeAtIndex(node.getOut(i)), state);
                 }

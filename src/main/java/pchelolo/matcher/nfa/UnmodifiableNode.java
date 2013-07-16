@@ -1,9 +1,10 @@
 package pchelolo.matcher.nfa;
 
 public interface UnmodifiableNode {
-    Character getC();
+    char getC();
     int getOutCount();
     int getOut(int index);
     int getNumber();
     boolean isFinal();
+    boolean isEpsilon();
 }

@@ -25,7 +25,7 @@ public class NFATest {
         NFAFragment nfa = new NFAConstructionVisitor().visit(tree);
         assertNotNull(nfa);
         Node firstState = nfa.getStart();
-        assertNull(firstState.getC());
+        assertTrue(firstState.isEpsilon());
         assertEquals(2, firstState.getOutCount());
         boolean visitedA = false;
         boolean visitedB = false;
