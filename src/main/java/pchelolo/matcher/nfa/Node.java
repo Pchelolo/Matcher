@@ -1,11 +1,12 @@
 package pchelolo.matcher.nfa;
 
-import java.util.*;
-
 public class Node implements UnmodifiableNode {
 
+    private static final char FINAL_CHAR = ' ';
+
+    private int number = 0;
     private final Character c;
-    private final Node[] out;
+    private final int[] out;
 
     public Node(Character c) {
         this(c, 1);
@@ -13,7 +14,24 @@ public class Node implements UnmodifiableNode {
 
     private Node(Character c, int splitCount) {
         this.c = c;
-        this.out = new Node[splitCount];
+        this.out = new int[splitCount];
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    @Override
+    public boolean isFinal() {
+        return c == FINAL_CHAR;
+    }
+
+    static Node createFinal() {
+        return new Node(FINAL_CHAR);
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public void setOutNode(Node newNode) {
@@ -21,11 +39,18 @@ public class Node implements UnmodifiableNode {
     }
 
     public void setOutNode(Node newNode, int index) {
-        this.out[index] = newNode;
+        this.out[index] = newNode.getNumber();
     }
 
     static Node splitNode(int splitCount) {
         return new Node(null, splitCount);
+    }
+
+    void updateCount(int offset) {
+        this.number += offset;
+        for (int i = 0; i < out.length; i++) {
+            out[i] += offset;
+        }
     }
 
     @Override
@@ -35,7 +60,7 @@ public class Node implements UnmodifiableNode {
 
     @Override
     @SuppressWarnings("unchecked")
-    public UnmodifiableNode[] getOut() {
+    public int[] getOut() {
         //TODO: clone?
         return out;
     }

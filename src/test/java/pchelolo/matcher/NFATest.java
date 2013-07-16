@@ -26,24 +26,25 @@ public class NFATest {
         assertNotNull(nfa);
         Node firstState = nfa.getStart();
         assertNull(firstState.getC());
-        UnmodifiableNode[] firstOuts = firstState.getOut();
+        int[] firstOuts = firstState.getOut();
         assertNotNull(firstOuts);
         assertEquals(2, firstOuts.length);
         boolean visitedA = false;
         boolean visitedB = false;
-        for (UnmodifiableNode node : firstOuts) {
+        for (int idx : firstOuts) {
+            UnmodifiableNode node = nfa.getNodes().get(idx);
             if (node.getC() == 'a') {
-                UnmodifiableNode[] aOuts = node.getOut();
+                int[] aOuts = node.getOut();
                 assertEquals(1, aOuts.length);
-                assertTrue(aOuts[0] == UnmodifiableNode.FINAL);
+                assertTrue(nfa.getNodes().get(aOuts[0]).isFinal());
                 visitedA = true;
             } else if (node.getC() == 'b') {
-                UnmodifiableNode[] bOuts = node.getOut();
+                int[] bOuts = node.getOut();
                 assertEquals(1, bOuts.length);
-                UnmodifiableNode cState = bOuts[0];
+                UnmodifiableNode cState = nfa.getNodes().get(bOuts[0]);
                 assertTrue(cState.getC() == 'c');
                 assertEquals(1, cState.getOut().length);
-                assertTrue(cState.getOut()[0] == UnmodifiableNode.FINAL);
+                assertTrue(nfa.getNodes().get(cState.getOut()[0]).isFinal());
                 visitedB = true;
             } else {
                 assertTrue("Unexpected state " + node, false);

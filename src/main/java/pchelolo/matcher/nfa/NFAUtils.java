@@ -2,6 +2,7 @@ package pchelolo.matcher.nfa;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,34 +12,39 @@ public class NFAUtils {
         //Avoid instantiation
     }
 
-    public static UnmodifiableNode createNFA(ParseTree tree) {
-        return new NFAConstructionVisitor().visit(tree).getStart();
+    public static NFAFragment createNFA(ParseTree tree) {
+        return new NFAConstructionVisitor().visit(tree);
     }
 
-    public static Set<UnmodifiableNode> getInitialSetForState(UnmodifiableNode start) {
-        final Set<UnmodifiableNode> states = new HashSet<>();
-        addEReachableStates(start, states);
-        return states;
+    public static boolean[] getInitialSetForState(NFAFragment nfa) {
+        boolean[] state = new boolean[nfa.getNodes().size()];
+        addEReachableStates(nfa, nfa.getStart(), state);
+        return state;
     }
 
-    public static Set<UnmodifiableNode> getNextStates(Set<UnmodifiableNode> states, char nextChar) {
-
-        Set<UnmodifiableNode> newSet = new HashSet<>();
-        for (UnmodifiableNode state : states) {
-            if (state.getC() != null && state.getC() == nextChar) {
-                for (UnmodifiableNode node : state.getOut()) {
-                    addEReachableStates(node, newSet);
+    public static boolean[] getNextStates(NFAFragment nfaFragment, boolean[] state, char nextChar) {
+        boolean[] newState = new boolean[state.length];
+        for (int i = 0; i < state.length; i++) {
+            if (state[i]) {
+                UnmodifiableNode node = nfaFragment.getNodes().get(i);
+                if (node.getC() != null && node.getC() == nextChar) {
+                    for (int outIdx : node.getOut()) {
+                        addEReachableStates(nfaFragment, nfaFragment.getNodes().get(outIdx), newState);
+                    }
                 }
             }
         }
-        return newSet;
+        return newState;
     }
 
-    private static void addEReachableStates(UnmodifiableNode state, Set<UnmodifiableNode> set) {
-        if (state == null) return;
-        if (set.add(state) && state.getC() == null) {
-            for (UnmodifiableNode node : state.getOut()) {
-                addEReachableStates(node, set);
+    private static void addEReachableStates(NFAFragment nfa, UnmodifiableNode node, boolean[] state) {
+        if (node == null) return;
+        if (!state[node.getNumber()]) {
+            state[node.getNumber()] = true;
+            if (node.getC() == null) {
+                for (int i : node.getOut()) {
+                    addEReachableStates(nfa, nfa.getNodes().get(i), state);
+                }
             }
         }
     }

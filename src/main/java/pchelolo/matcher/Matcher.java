@@ -1,5 +1,6 @@
 package pchelolo.matcher;
 
+import pchelolo.matcher.nfa.NFAFragment;
 import pchelolo.matcher.nfa.NFAUtils;
 import pchelolo.matcher.nfa.UnmodifiableNode;
 
@@ -7,20 +8,19 @@ import java.util.Set;
 
 public class Matcher {
 
-    private final UnmodifiableNode nfa;
+    private final NFAFragment nfa;
 
-    Matcher(UnmodifiableNode nfa) {
+    Matcher(NFAFragment nfa) {
         this.nfa = nfa;
     }
 
     public boolean matches(String string) {
         char[] characters = string.toCharArray();
-        Set<UnmodifiableNode> currentStates = NFAUtils.getInitialSetForState(nfa);
+        boolean[] state = NFAUtils.getInitialSetForState(nfa);
         for (char c : characters) {
-            if (currentStates.isEmpty()) return false;
-            currentStates = NFAUtils.getNextStates(currentStates, c);
+            state = NFAUtils.getNextStates(nfa, state, c);
         }
-        return currentStates.contains(UnmodifiableNode.FINAL);
+        return state[state.length - 1];
     }
 
 }

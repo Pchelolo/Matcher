@@ -4,12 +4,12 @@ package pchelolo.matcher;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+import pchelolo.matcher.nfa.NFAFragment;
 import pchelolo.matcher.nfa.NFAUtils;
-import pchelolo.matcher.nfa.UnmodifiableNode;
 
 public class Pattern {
 
-    private final UnmodifiableNode node;
+    private final NFAFragment node;
     // Memory visibility assurance
     private volatile boolean isCompiled = false;
 

@@ -6,32 +6,39 @@ import java.util.List;
 import java.util.Set;
 
 public class NFAFragment {
-    private Node start;
-    private List<Node> outStates;
+    private List<Node> nodes;
+    private List<Node> outNodes;
 
     NFAFragment(Node start) {
-        this.start = start;
-        outStates = new ArrayList<>();
+        nodes = new ArrayList<>();
+        nodes.add(start);
+        outNodes = new ArrayList<>();
     }
 
     public List<Node> getOutStates() {
-        return outStates;
+        return outNodes;
     }
 
     public Node getStart() {
-        return start;
+        return nodes.get(0);
     }
 
-    public void setStart(Node newStart) {
-        this.start = newStart;
+    public List<Node> getNodes() {
+        return nodes;
     }
 
-    public void setOutStates(List<Node> newOutStates) {
-        this.outStates = newOutStates;
+    public void updateCounts(int offset) {
+        for (Node node : nodes) {
+            node.updateCount(offset);
+        }
     }
 
-    public void setOutState(Node newOutState) {
-        this.outStates = new ArrayList<>();
-        this.outStates.add(newOutState);
+    public void setOutNodes(List<Node> newOutStates) {
+        this.outNodes = newOutStates;
+    }
+
+    public void setOutNode(Node node) {
+        this.outNodes = new ArrayList<>();
+        this.outNodes.add(node);
     }
 }
