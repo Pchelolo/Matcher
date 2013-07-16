@@ -1,6 +1,6 @@
 package pchelolo.matcher.nfa;
 
-public class Node implements UnmodifiableNode {
+class Node implements UnmodifiableNode {
 
     private static final char FINAL_CHAR = ' ';
 
@@ -8,42 +8,21 @@ public class Node implements UnmodifiableNode {
     private final Character c;
     private final int[] out;
 
-    public Node(Character c) {
-        this(c, 1);
-    }
-
     private Node(Character c, int splitCount) {
         this.c = c;
         this.out = new int[splitCount];
     }
 
-    public int getNumber() {
-        return number;
-    }
-
-    @Override
-    public boolean isFinal() {
-        return c == FINAL_CHAR;
-    }
-
-    static Node createFinal() {
-        return new Node(FINAL_CHAR);
-    }
-
-    public void setNumber(int number) {
+    void setNumber(int number) {
         this.number = number;
     }
 
-    public void setOutNode(Node newNode) {
+    void setOutNode(Node newNode) {
         setOutNode(newNode, 0);
     }
 
-    public void setOutNode(Node newNode, int index) {
+    void setOutNode(Node newNode, int index) {
         this.out[index] = newNode.getNumber();
-    }
-
-    static Node splitNode(int splitCount) {
-        return new Node(null, splitCount);
     }
 
     void updateCount(int offset) {
@@ -53,16 +32,45 @@ public class Node implements UnmodifiableNode {
         }
     }
 
+    // ------- Factory methods -------------------- //
+
+    static Node splitNode(int splitCount) {
+        return new Node(null, splitCount);
+    }
+
+    static Node commonNode(Character c) {
+        return new Node(c, 1);
+    }
+
+    static Node finalNode() {
+        return new Node(FINAL_CHAR, 0);
+    }
+
+    // ------- Unmodifiable Node public API ------- //
+
+    @Override
+    public int getNumber() {
+        return number;
+    }
+
+    @Override
+    public boolean isFinal() {
+        return c == FINAL_CHAR;
+    }
+
     @Override
     public Character getC() {
         return c;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public int[] getOut() {
-        //TODO: clone?
-        return out;
+    public int getOutCount() {
+        return out.length;
+    }
+
+    @Override
+    public int getOut(int index) {
+        return out[index];
     }
 
     @Override

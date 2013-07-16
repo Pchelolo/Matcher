@@ -16,20 +16,20 @@ public class NFAUtils {
         return new NFAConstructionVisitor().visit(tree);
     }
 
-    public static boolean[] getInitialSetForState(NFAFragment nfa) {
-        boolean[] state = new boolean[nfa.getNodes().size()];
+    public static boolean[] getInitialSetForState(UnmodifiableNFA nfa) {
+        boolean[] state = new boolean[nfa.getNodesCount()];
         addEReachableStates(nfa, nfa.getStart(), state);
         return state;
     }
 
-    public static boolean[] getNextStates(NFAFragment nfaFragment, boolean[] state, char nextChar) {
+    public static boolean[] getNextStates(UnmodifiableNFA nfa, boolean[] state, char nextChar) {
         boolean[] newState = new boolean[state.length];
         for (int i = 0; i < state.length; i++) {
             if (state[i]) {
-                UnmodifiableNode node = nfaFragment.getNodes().get(i);
+                UnmodifiableNode node = nfa.getNodeAtIndex(i);
                 if (node.getC() != null && node.getC() == nextChar) {
-                    for (int outIdx : node.getOut()) {
-                        addEReachableStates(nfaFragment, nfaFragment.getNodes().get(outIdx), newState);
+                    for (int outIdx = 0; outIdx < node.getOutCount(); outIdx++) {
+                        addEReachableStates(nfa, nfa.getNodeAtIndex(node.getOut(outIdx)), newState);
                     }
                 }
             }
@@ -37,13 +37,13 @@ public class NFAUtils {
         return newState;
     }
 
-    private static void addEReachableStates(NFAFragment nfa, UnmodifiableNode node, boolean[] state) {
+    private static void addEReachableStates(UnmodifiableNFA nfa, UnmodifiableNode node, boolean[] state) {
         if (node == null) return;
         if (!state[node.getNumber()]) {
             state[node.getNumber()] = true;
             if (node.getC() == null) {
-                for (int i : node.getOut()) {
-                    addEReachableStates(nfa, nfa.getNodes().get(i), state);
+                for (int i = 0; i < node.getOutCount(); i++) {
+                    addEReachableStates(nfa, nfa.getNodeAtIndex(node.getOut(i)), state);
                 }
             }
         }

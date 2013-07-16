@@ -6,15 +6,16 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 import pchelolo.matcher.nfa.NFAFragment;
 import pchelolo.matcher.nfa.NFAUtils;
+import pchelolo.matcher.nfa.UnmodifiableNFA;
 
 public class Pattern {
 
-    private final NFAFragment node;
+    private final UnmodifiableNFA nfa;
     // Memory visibility assurance
     private volatile boolean isCompiled = false;
 
     private Pattern(ParseTree tree) {
-         node = NFAUtils.createNFA(tree);
+         nfa = NFAUtils.createNFA(tree);
     }
 
     public static Pattern compile(String patternString) {
@@ -30,7 +31,7 @@ public class Pattern {
             // Impossible
             throw new IllegalStateException("The pattern was not compiled");
         }
-        return new Matcher(node);
+        return new Matcher(nfa);
     }
 
     static ParseTree parse(final String patternString) {
