@@ -1,20 +1,20 @@
 package pchelolo.matcher.nfa;
 
-class Node implements UnmodifiableNode {
-
-    private static final char FINAL_CHAR = ' ';
-
+abstract class Node implements UnmodifiableNode {
     private int number = 0;
-    private final Character c;
-    private final int[] out;
 
-    private Node(Character c, int splitCount) {
-        this.c = c;
-        this.out = new int[splitCount];
+    Node() {
     }
 
     void setNumber(int number) {
         this.number = number;
+    }
+
+    void updateCount(int offset) {
+        this.number += offset;
+        for (int i = 0; i < getOutCount(); i++) {
+            setOutNode(getOut(i) + offset, i);
+        }
     }
 
     void setOutNode(Node newNode) {
@@ -22,28 +22,23 @@ class Node implements UnmodifiableNode {
     }
 
     void setOutNode(Node newNode, int index) {
-        this.out[index] = newNode.getNumber();
+        setOutNode(newNode.getNumber(), index);
     }
 
-    void updateCount(int offset) {
-        this.number += offset;
-        for (int i = 0; i < out.length; i++) {
-            out[i] += offset;
-        }
-    }
+    abstract void setOutNode(int newNode, int index);
 
     // ------- Factory methods -------------------- //
 
     static Node splitNode(int splitCount) {
-        return new Node(null, splitCount);
+        return new SplitNode(splitCount);
     }
 
-    static Node commonNode(Character c) {
-        return new Node(c, 1);
+    static Node commonNode(char c) {
+        return new CommonNode(c);
     }
 
     static Node finalNode() {
-        return new Node(FINAL_CHAR, 0);
+        return new FinalNode();
     }
 
     // ------- Unmodifiable Node public API ------- //
@@ -55,26 +50,98 @@ class Node implements UnmodifiableNode {
 
     @Override
     public boolean isFinal() {
-        return c == FINAL_CHAR;
+        return false;
     }
 
-    @Override
-    public Character getC() {
-        return c;
+    private static class CommonNode extends Node {
+        private final char c;
+        private int out;
+
+        private CommonNode(char c) {
+            this.c = c;
+        }
+
+        @Override
+        public Character getC() {
+            return c;
+        }
+
+        @Override
+        public int getOutCount() {
+            return 1;
+        }
+
+        @Override
+        public int getOut(int index) {
+            assert index == 0;
+            return out;
+        }
+
+        @Override
+        void setOutNode(int newNode, int index) {
+            assert index == 0;
+            out = newNode;
+        }
     }
 
-    @Override
-    public int getOutCount() {
-        return out.length;
+    private static class SplitNode extends Node {
+        private final int[] out;
+
+        SplitNode(int splitCount) {
+            out = new int[splitCount];
+        }
+
+        @Override
+        public Character getC() {
+            return null;
+        }
+
+        @Override
+        public int getOutCount() {
+            return out.length;
+        }
+
+        @Override
+        public int getOut(int index) {
+            return out[index];
+        }
+
+        @Override
+        void setOutNode(int newNode, int index) {
+            this.out[index] = newNode;
+        }
+
     }
 
-    @Override
-    public int getOut(int index) {
-        return out[index];
+    private static class FinalNode extends Node {
+
+        FinalNode() {
+        }
+
+        @Override
+        void setOutNode(int newNode, int index) {
+            throw new IllegalStateException("Could not set out nodes of a final node");
+        }
+
+        @Override
+        public Character getC() {
+            return null;
+        }
+
+        @Override
+        public int getOutCount() {
+            return 0;
+        }
+
+        @Override
+        public int getOut(int index) {
+            throw new IllegalStateException("Could not get out nodes of a final node");
+        }
+
+        @Override
+        public boolean isFinal() {
+            return true;
+        }
     }
 
-    @Override
-    public String toString() {
-        return String.format("Node: c=%c outs=%d", c, out.length);
-    }
 }

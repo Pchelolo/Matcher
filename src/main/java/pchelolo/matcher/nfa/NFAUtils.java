@@ -38,7 +38,6 @@ public class NFAUtils {
     }
 
     private static void addEReachableStates(UnmodifiableNFA nfa, UnmodifiableNode node, boolean[] state) {
-        if (node == null) return;
         if (!state[node.getNumber()]) {
             state[node.getNumber()] = true;
             if (node.getC() == null) {
