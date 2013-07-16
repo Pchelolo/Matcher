@@ -33,7 +33,7 @@ public class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
             NFAFragment nextFragment = visit(atoms.get(idx));
             //Connect out states of a currently constructed fragment to the next one
             for (Node outNode : resultFragment.getOutStates()) {
-                outNode.addOutNode(nextFragment.getStart());
+                outNode.setOutNode(nextFragment.getStart());
             }
             resultFragment.setOutStates(nextFragment.getOutStates());
         }
@@ -42,11 +42,13 @@ public class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
 
     @Override
     public NFAFragment visitDisjunction(@NotNull RegexParser.DisjunctionContext ctx) {
-        Node newStartNode = Node.splitNode();
+        int fragmentsNum = ctx.conjunction().size();
+        Node newStartNode = Node.splitNode(fragmentsNum);
         NFAFragment resultFragment = new NFAFragment(newStartNode);
-        for (RegexParser.ConjunctionContext context : ctx.conjunction()) {
-            NFAFragment conjunctionFragment = visit(context);
-            newStartNode.addOutNode(conjunctionFragment.getStart());
+
+        for (int i = 0; i < fragmentsNum; i++) {
+            NFAFragment conjunctionFragment = visit(ctx.conjunction(i));
+            newStartNode.setOutNode(conjunctionFragment.getStart(), i);
             resultFragment.getOutStates().addAll(conjunctionFragment.getOutStates());
         }
         return resultFragment;
@@ -54,13 +56,13 @@ public class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
 
     @Override
     public NFAFragment visitClosure(@NotNull RegexParser.ClosureContext ctx) {
-        Node newStartNode = Node.splitNode();
+        Node newStartNode = Node.splitNode(2);
         NFAFragment resultFragment = visit(ctx.atom());
         // Loop the out states of a fragment back to new state
         for (Node outState : resultFragment.getOutStates()) {
-            outState.addOutNode(newStartNode);
+            outState.setOutNode(newStartNode);
         }
-        newStartNode.addOutNode(resultFragment.getStart());
+        newStartNode.setOutNode(resultFragment.getStart(), 1);
         resultFragment.setStart(newStartNode);
         resultFragment.setOutState(newStartNode);
         return resultFragment;
@@ -72,11 +74,11 @@ public class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
         char finish = ctx.ID(1).getSymbol().getText().charAt(0);
         if (start > finish)
             throw new IllegalArgumentException(String.format("Illegal range: %c..%c", start, finish));
-        Node startNode = Node.splitNode();
+        Node startNode = Node.splitNode(finish - start + 1);
         NFAFragment result = new NFAFragment(startNode);
         for (char c = start; c <= finish; c++) {
             Node charNode = new Node(c);
-            startNode.addOutNode(charNode);
+            startNode.setOutNode(charNode, c - start);
             result.getOutStates().add(charNode);
         }
         return result;
@@ -84,11 +86,12 @@ public class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
 
     @Override
     public NFAFragment visitListGroup(@NotNull RegexParser.ListGroupContext ctx) {
-        Node startNode = Node.splitNode();
+        int fragmentsCount = ctx.ID().size();
+        Node startNode = Node.splitNode(fragmentsCount);
         NFAFragment result = new NFAFragment(startNode);
-        for (TerminalNode id : ctx.ID()) {
-            Node charNode = new Node(id.getSymbol().getText().charAt(0));
-            startNode.addOutNode(charNode);
+        for (int i = 0; i < fragmentsCount; i++) {
+            Node charNode = new Node(ctx.ID(i).getSymbol().getText().charAt(0));
+            startNode.setOutNode(charNode, i);
             result.getOutStates().add(charNode);
         }
         return result;
@@ -96,11 +99,12 @@ public class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
 
     @Override
     public NFAFragment visitRangeGroup(@NotNull RegexParser.RangeGroupContext ctx) {
-        Node startNode = Node.splitNode();
+        int fragmentsCount = ctx.range().size();
+        Node startNode = Node.splitNode(fragmentsCount);
         NFAFragment result = new NFAFragment(startNode);
-        for (RegexParser.RangeContext rangeContext : ctx.range()) {
-            NFAFragment rangeFragment = visit(rangeContext);
-            startNode.addOutNode(rangeFragment.getStart());
+        for (int i = 0; i < fragmentsCount; i++) {
+            NFAFragment rangeFragment = visit(ctx.range(i));
+            startNode.setOutNode(rangeFragment.getStart(), i);
             result.getOutStates().addAll(rangeFragment.getOutStates());
         }
         return result;
@@ -110,7 +114,7 @@ public class NFAConstructionVisitor extends RegexBaseVisitor<NFAFragment> {
     public NFAFragment visitRegex(@NotNull RegexParser.RegexContext ctx) {
         NFAFragment resultFragment = visit(ctx.disjunction());
         for (Node node : resultFragment.getOutStates()) {
-            node.addOutNode(Node.FINAL);
+            node.setOutNode(Node.FINAL);
         }
         resultFragment.setOutStates(null);
         return resultFragment;

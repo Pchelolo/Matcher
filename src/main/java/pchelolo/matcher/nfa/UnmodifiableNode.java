@@ -5,5 +5,5 @@ import java.util.List;
 public interface UnmodifiableNode {
     public static final Node FINAL = new Node(' ');
     public Character getC();
-    public List<UnmodifiableNode> getOut();
+    public UnmodifiableNode[] getOut();
 }
