@@ -19,13 +19,19 @@ class NFAFragment implements UnmodifiableNFA{
         return nodes;
     }
 
-    List<Node> getOutStates() {
+    List<Node> getOutNodes() {
         return outNodes;
     }
 
     void updateCounts(int offset) {
         for (Node node : nodes) {
             node.updateCount(offset);
+        }
+    }
+
+    void connectOutNodes(UnmodifiableNode nextNode) {
+        for (Node outNode : outNodes) {
+            outNode.setOutNode(nextNode);
         }
     }
 
