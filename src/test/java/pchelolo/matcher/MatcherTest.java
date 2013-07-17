@@ -85,4 +85,16 @@ public class MatcherTest {
             assertTrue("AssertionError for string: " + test, p.matcher(test).matches() == javaPattern.matcher(test).matches());
         }
     }
+
+    @Test
+    public void testNextMatchingSubstring() throws Exception {
+        Pattern p = Pattern.compile("(ab|c)*");
+        Matcher m = p.matcher("DDDDabcccabDcabDDDabDDDDDDD");
+        assertEquals("abcccab", m.nextMatchingSubstring());
+        assertEquals("cab", m.nextMatchingSubstring());
+        assertEquals("ab", m.nextMatchingSubstring());
+        assertNull(m.nextMatchingSubstring());
+        m.reset();
+        assertEquals("abcccab", m.nextMatchingSubstring());
+    }
 }

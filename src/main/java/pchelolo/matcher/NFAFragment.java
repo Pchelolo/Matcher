@@ -1,9 +1,7 @@
-package pchelolo.matcher.nfa;
+package pchelolo.matcher;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 class NFAFragment implements UnmodifiableNFA{
     private final List<Node> nodes;
@@ -44,6 +42,17 @@ class NFAFragment implements UnmodifiableNFA{
         this.outNodes.add(node);
     }
 
+    private void addEReachableStates(UnmodifiableNode node, boolean[] state) {
+        if (!state[node.getNumber()]) {
+            state[node.getNumber()] = true;
+            if (node.isEpsilon()) {
+                for (int i = 0; i < node.getOutCount(); i++) {
+                    addEReachableStates(getNodeAtIndex(node.getOut(i)), state);
+                }
+            }
+        }
+    }
+
     // ---------- UnmodifiableNFA public API -------- //
     @Override
     public Node getStart() {
@@ -58,5 +67,28 @@ class NFAFragment implements UnmodifiableNFA{
     @Override
     public int getNodesCount() {
         return nodes.size();
+    }
+
+    @Override
+    public boolean[] getInitialState() {
+        boolean[] state = new boolean[getNodesCount()];
+        addEReachableStates(getStart(), state);
+        return state;
+    }
+
+    @Override
+    public boolean[] getNextState(boolean[] state, char nextChar) {
+        boolean[] newState = new boolean[state.length];
+        for (int i = 0; i < state.length; i++) {
+            if (state[i]) {
+                UnmodifiableNode node = getNodeAtIndex(i);
+                if (node.getC() == nextChar) {
+                    for (int outIdx = 0; outIdx < node.getOutCount(); outIdx++) {
+                        addEReachableStates(getNodeAtIndex(node.getOut(outIdx)), newState);
+                    }
+                }
+            }
+        }
+        return newState;
     }
 }

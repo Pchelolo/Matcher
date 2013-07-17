@@ -4,8 +4,6 @@ package pchelolo.matcher;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import pchelolo.matcher.nfa.NFAUtils;
-import pchelolo.matcher.nfa.UnmodifiableNFA;
 
 /**
  * Represents a compiled regular expression pattern.
@@ -19,7 +17,7 @@ public final class Pattern {
     private volatile boolean isCompiled = false;
 
     private Pattern(ParseTree tree) {
-         nfa = NFAUtils.createNFA(tree);
+         nfa = new NFAConstructionVisitor().visit(tree);
     }
 
     static ParseTree parse(final String patternString) {
@@ -61,6 +59,6 @@ public final class Pattern {
             // Impossible
             throw new IllegalStateException("The pattern was not compiled");
         }
-        return new Matcher(nfa, testString);
+        return new Matcher(nfa, testString, this);
     }
 }

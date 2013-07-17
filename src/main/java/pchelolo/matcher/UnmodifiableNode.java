@@ -1,4 +1,4 @@
-package pchelolo.matcher.nfa;
+package pchelolo.matcher;
 
 /**
  * Represents a single node in a Nondeterministic Finite Automata.
@@ -10,7 +10,7 @@ package pchelolo.matcher.nfa;
  *
  * Immutable.
  */
-public interface UnmodifiableNode {
+interface UnmodifiableNode {
 
     /**
      * @return node label or 0 if not applicable to the node type

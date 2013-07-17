@@ -1,9 +1,7 @@
-package pchelolo.matcher.nfa;
+package pchelolo.matcher;
 
 
 import org.antlr.v4.runtime.misc.NotNull;
-import pchelolo.matcher.RegexBaseVisitor;
-import pchelolo.matcher.RegexParser;
 
 import java.util.List;
 
