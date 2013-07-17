@@ -9,49 +9,49 @@ public class MatcherTest {
 
     @Test
     public void testMatchesA() throws Exception {
-        Matcher m = Pattern.compile("a").matcher();
-        assertTrue(m.matches("a"));
-        assertFalse(m.matches("b"));
-        assertFalse(m.matches("ab"));
+        Pattern p = Pattern.compile("a");
+        assertTrue(p.matcher("a").matches());
+        assertFalse(p.matcher("b").matches());
+        assertFalse(p.matcher("ab").matches());
     }
 
     @Test
     public void testMatchesAorB() throws Exception {
-        Matcher m = Pattern.compile("ab|cd").matcher();
-        assertTrue(m.matches("ab"));
-        assertTrue(m.matches("cd"));
-        assertFalse(m.matches("abc"));
+        Pattern p = Pattern.compile("ab|cd");
+        assertTrue(p.matcher("ab").matches());
+        assertTrue(p.matcher("cd").matches());
+        assertFalse(p.matcher("abc").matches());
     }
 
     @Test
     public void testMatchesClosure() throws Exception {
-        Matcher m = Pattern.compile("a*").matcher();
-        assertTrue(m.matches("a"));
-        assertTrue(m.matches("aaaaaaaaaaa"));
-        assertFalse(m.matches("ab"));
+        Pattern p = Pattern.compile("a*");
+        assertTrue(p.matcher("a").matches());
+        assertTrue(p.matcher("aaaaaaaaaaa").matches());
+        assertFalse(p.matcher("ab").matches());
     }
 
     @Test
     public void testMatchesAB() throws Exception {
-        Matcher m = Pattern.compile("ab").matcher();
-        assertFalse(m.matches("a"));
-        assertFalse(m.matches("b"));
-        assertTrue(m.matches("ab"));
+        Pattern p = Pattern.compile("ab");
+        assertFalse(p.matcher("a").matches());
+        assertFalse(p.matcher("b").matches());
+        assertTrue(p.matcher("ab").matches());
     }
 
     @Test
     public void testMatchesRangeGroup() throws Exception {
-        Matcher m = Pattern.compile("[a-z0-9]*").matcher();
-        assertTrue(m.matches("a"));
-        assertTrue(m.matches("absdfvsdfvsdcadc90129"));
-        assertFalse(m.matches("A"));
-        assertFalse(m.matches("asdasdcasdcasdcasdcA"));
+        Pattern p = Pattern.compile("[a-z0-9]*");
+        assertTrue(p.matcher("a").matches());
+        assertTrue(p.matcher("absdfvsdfvsdcadc90129").matches());
+        assertFalse(p.matcher("A").matches());
+        assertFalse(p.matcher("asdasdcasdcasdcasdcA").matches());
     }
 
     @Test
     public void testClosureWithDisjunction() throws Exception {
         String pattern = "(a|b)*";
-        Matcher m = Pattern.compile(pattern).matcher();
+        Pattern p = Pattern.compile(pattern);
         java.util.regex.Pattern javaPattern = java.util.regex.Pattern.compile(pattern);
         String[] testSequences = {
                 "aaa",
@@ -61,9 +61,8 @@ public class MatcherTest {
                 "c",
                 "ababbabababababababaaac"
         };
-        System.out.println(m.matches(testSequences[0]));
         for (String test : testSequences) {
-            assertTrue("AssertionError for string: " + test, m.matches(test) == javaPattern.matcher(test).matches());
+            assertTrue("AssertionError for string: " + test, p.matcher(test).matches() == javaPattern.matcher(test).matches());
         }
 
     }
@@ -71,7 +70,7 @@ public class MatcherTest {
     @Test
     public void testMatchesComplex1() throws Exception {
         String pattern = "a*|(a*ba*ba*)*[a-zA-Z]*";
-        Matcher m = Pattern.compile(pattern).matcher();
+        Pattern p = Pattern.compile(pattern);
         java.util.regex.Pattern javaPattern = java.util.regex.Pattern.compile(pattern);
         String[] testSequences = {
                 "a",
@@ -83,7 +82,7 @@ public class MatcherTest {
                 "babbaaaasdc)A"
         };
         for (String test : testSequences) {
-            assertTrue("AssertionError for string: " + test, m.matches(test) == javaPattern.matcher(test).matches());
+            assertTrue("AssertionError for string: " + test, p.matcher(test).matches() == javaPattern.matcher(test).matches());
         }
     }
 }

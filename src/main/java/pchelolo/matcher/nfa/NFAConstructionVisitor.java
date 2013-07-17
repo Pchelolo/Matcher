@@ -1,5 +1,6 @@
 package pchelolo.matcher.nfa;
 
+
 import org.antlr.v4.runtime.misc.NotNull;
 import pchelolo.matcher.RegexBaseVisitor;
 import pchelolo.matcher.RegexParser;

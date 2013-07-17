@@ -6,16 +6,17 @@ import pchelolo.matcher.nfa.UnmodifiableNFA;
 public final class Matcher {
 
     private final UnmodifiableNFA nfa;
+    private final String testString;
 
-    Matcher(UnmodifiableNFA nfa) {
+    Matcher(final UnmodifiableNFA nfa, final String testString) {
         this.nfa = nfa;
+        this.testString = testString;
     }
 
-    public boolean matches(String string) {
-        char[] characters = string.toCharArray();
+    public boolean matches() {
         boolean[] state = NFAUtils.getInitialSetForState(nfa);
-        for (char c : characters) {
-            state = NFAUtils.getNextStates(nfa, state, c);
+        for (int i = 0; i < testString.length(); i++) {
+            state = NFAUtils.getNextStates(nfa, state, testString.charAt(i));
         }
         return state[state.length - 1];
     }
