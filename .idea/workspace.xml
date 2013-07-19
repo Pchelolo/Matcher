@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f8e4f13-8330-4798-a981-384a56fc7ba3" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/pchelolo/matcher/nfa/NFAUtils.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/pchelolo/matcher/nfa/UnmodifiableNode.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/pchelolo/matcher/Pattern.java" afterPath="$PROJECT_DIR$/src/main/java/pchelolo/matcher/Pattern.java" />
     </list>
     <ignored path="Matcher.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -12,7 +10,7 @@
     <file path="/pom.xml" changelist="1f8e4f13-8330-4798-a981-384a56fc7ba3" time="1373806208256" ignored="false" />
     <file path="/Regex.g4" changelist="1f8e4f13-8330-4798-a981-384a56fc7ba3" time="1373803861694" ignored="false" />
     <file path="/Parser.java" changelist="1f8e4f13-8330-4798-a981-384a56fc7ba3" time="1373709800586" ignored="false" />
-    <file path="/Pattern.java" changelist="1f8e4f13-8330-4798-a981-384a56fc7ba3" time="1374250677142" ignored="false" />
+    <file path="/Pattern.java" changelist="1f8e4f13-8330-4798-a981-384a56fc7ba3" time="1374251148547" ignored="false" />
     <file path="/fragment.java" changelist="1f8e4f13-8330-4798-a981-384a56fc7ba3" time="1373719444146" ignored="false" />
     <file path="/ParserTest.java" changelist="1f8e4f13-8330-4798-a981-384a56fc7ba3" time="1373709857897" ignored="false" />
     <file path="/RegexParserTest.java" changelist="1f8e4f13-8330-4798-a981-384a56fc7ba3" time="1373709984352" ignored="false" />
@@ -106,19 +104,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="UnmodifiableNode.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="UnmodifiableNode.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/pchelolo/matcher/UnmodifiableNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="13" selection-start="919" selection-end="919" vertical-scroll-proportion="0.6998445">
+            <state line="35" column="13" selection-start="919" selection-end="919" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Matcher.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/pchelolo/matcher/Matcher.java">
+      <file leaf-file-name="Pattern.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/pchelolo/matcher/Pattern.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="13" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0">
+            <state line="64" column="8" selection-start="1974" selection-end="1974" vertical-scroll-proportion="0.8485714">
               <folding />
             </state>
           </provider>
@@ -156,8 +154,8 @@
         <option value="$PROJECT_DIR$/src/main/java/pchelolo/matcher/Matcher.java" />
         <option value="$PROJECT_DIR$/src/main/java/pchelolo/matcher/nfa/Node.java" />
         <option value="$PROJECT_DIR$/src/main/java/pchelolo/matcher/nfa/UnmodifiableNode.java" />
-        <option value="$PROJECT_DIR$/src/main/java/pchelolo/matcher/Pattern.java" />
         <option value="$PROJECT_DIR$/src/main/java/pchelolo/matcher/UnmodifiableNode.java" />
+        <option value="$PROJECT_DIR$/src/main/java/pchelolo/matcher/Pattern.java" />
       </list>
     </option>
   </component>
@@ -677,11 +675,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1440" height="805" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.0" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329927" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.03211679" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -691,13 +690,12 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2496361" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15925394" sideWeight="0.97956204" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15925394" sideWeight="0.5518248" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24605452" sideWeight="0.97956204" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.020437956" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24605452" sideWeight="0.5518248" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4481752" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30713245" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329927" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.0" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -801,30 +799,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pchelolo/matcher/Matcher.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="13" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/src.zip!/java/util/regex/Pattern.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="1013" column="107" selection-start="47940" selection-end="47940" vertical-scroll-proportion="1.1731844">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/pchelolo/matcher/Node.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="45" column="4" selection-start="984" selection-end="984" vertical-scroll-proportion="1.3917526">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/pchelolo/matcher/Pattern.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="48" selection-start="1664" selection-end="1664" vertical-scroll-proportion="1.515464">
           <folding />
         </state>
       </provider>
@@ -838,7 +815,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/pchelolo/matcher/UnmodifiableNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="13" selection-start="919" selection-end="919" vertical-scroll-proportion="0.6998445">
+        <state line="35" column="13" selection-start="919" selection-end="919" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///Library/Java/JavaVirtualMachines/jdk1.8.0.jdk/Contents/Home/src.zip!/java/util/regex/Pattern.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1349" column="12" selection-start="59926" selection-end="59926" vertical-scroll-proportion="0.5539216">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pchelolo/matcher/Matcher.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="13" selection-start="187" selection-end="187" vertical-scroll-proportion="0.023291925">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/pchelolo/matcher/Pattern.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="8" selection-start="1974" selection-end="1974" vertical-scroll-proportion="0.8485714">
           <folding />
         </state>
       </provider>
