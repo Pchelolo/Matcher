@@ -4,7 +4,3 @@
 *.jar
 *.war
 *.ear
-
-#Idea
-.idea/*
-*.iml

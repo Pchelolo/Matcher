@@ -2,10 +2,6 @@ package pchelolo.matcher.nfa;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 public class NFAUtils {
 
     private NFAUtils() {
@@ -38,8 +34,8 @@ public class NFAUtils {
     }
 
     private static void addEReachableStates(UnmodifiableNFA nfa, UnmodifiableNode node, boolean[] state) {
-        if (!state[node.getNumber()]) {
-            state[node.getNumber()] = true;
+        if (!state[node.getID()]) {
+            state[node.getID()] = true;
             if (node.isEpsilon()) {
                 for (int i = 0; i < node.getOutCount(); i++) {
                     addEReachableStates(nfa, nfa.getNodeAtIndex(node.getOut(i)), state);

@@ -35,10 +35,10 @@ public final class Pattern {
 
     static ParseTree parse(final String patternString) {
         if (patternString.isEmpty()) return null;
-        ANTLRInputStream stream = new ANTLRInputStream(patternString);
-        RegexLexer lexer = new RegexLexer(stream);
-        CommonTokenStream tokenStream = new CommonTokenStream(lexer);
-        RegexParser parser = new RegexParser(tokenStream);
+        RegexParser parser = new RegexParser(
+                new CommonTokenStream(
+                        new RegexLexer(
+                                new ANTLRInputStream(patternString))));
         return parser.regex();
     }
 }

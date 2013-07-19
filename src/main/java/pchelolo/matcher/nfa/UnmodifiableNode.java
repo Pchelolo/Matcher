@@ -4,6 +4,6 @@ public interface UnmodifiableNode {
     char getC();
     int getOutCount();
     int getOut(int index);
-    int getNumber();
+    int getID();
     boolean isEpsilon();
 }

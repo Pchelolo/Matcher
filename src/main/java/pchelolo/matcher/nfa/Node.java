@@ -22,7 +22,7 @@ abstract class Node implements UnmodifiableNode {
     }
 
     void setOutNode(UnmodifiableNode newNode, int index) {
-        setOutNode(newNode.getNumber(), index);
+        setOutNode(newNode.getID(), index);
     }
 
     abstract void setOutNode(int newNode, int index);
@@ -44,7 +44,7 @@ abstract class Node implements UnmodifiableNode {
     // ------- Unmodifiable Node public API ------- //
 
     @Override
-    public int getNumber() {
+    public int getID() {
         return number;
     }
 
