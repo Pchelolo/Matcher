@@ -1,4 +1,4 @@
-package pchelolo.matcher.nfa;
+package pchelolo.matcher;
 
 abstract class Node implements UnmodifiableNode {
     private int number = 0;

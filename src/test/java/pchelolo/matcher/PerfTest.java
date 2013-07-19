@@ -18,14 +18,14 @@ public class PerfTest {
         String testCase = sb.append("b").toString();
 
         java.util.regex.Pattern javaPattern = null;
-        Pattern m = null;
+        Pattern p = null;
 
         // Warm up //
         for (int idx = 1; idx < 2*REPEATS; idx++) {
             javaPattern = java.util.regex.Pattern.compile(pattern);
             javaPattern.matcher(testCase).matches();
-            m = Pattern.compile(pattern);
-            m.matcher().matches(testCase);
+            p = Pattern.compile(pattern);
+            p.matcher(testCase).matches();
         }
 
 
@@ -47,13 +47,13 @@ public class PerfTest {
         System.out.println("\tCurrent implementation");
         start = System.nanoTime();
         for (int idx = 0; idx < REPEATS; idx ++) {
-            m = Pattern.compile(pattern);
+            p = Pattern.compile(pattern);
         }
         end = System.nanoTime();
         System.out.println("\t\tCompilation:\t" + (end - start) / REPEATS);
         start = System.nanoTime();
         for (int idx = 0; idx < REPEATS; idx ++) {
-            m.matcher().matches(testCase);
+            p.matcher(testCase).matches();
         }
         end = System.nanoTime();
         System.out.println("\t\tExecution:\t" + (end - start) / REPEATS);

@@ -1,9 +1,8 @@
-package pchelolo.matcher.nfa;
+package pchelolo.matcher;
 
 
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Test;
-import pchelolo.matcher.Pattern;
 
 import java.lang.reflect.Method;
 
